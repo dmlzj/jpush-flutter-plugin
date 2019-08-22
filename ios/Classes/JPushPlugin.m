@@ -455,14 +455,18 @@ didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSe
 
 
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler  API_AVAILABLE(ios(10.0)){
-  
+
+    //前台收到消息但是不弹窗提醒
   NSDictionary * userInfo = notification.request.content.userInfo;
   if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
     [JPUSHService handleRemoteNotification:userInfo];
     [_channel invokeMethod:@"onReceiveNotification" arguments: [self jpushFormatAPNSDic:userInfo]];
   }
-  
-  completionHandler(notificationTypes);
+    if([userInfo[@"type"] isEqualToString:@"force_off"]){
+        completionHandler(JPAuthorizationOptionNone);
+    }else{
+        completionHandler(notificationTypes);
+    }
 }
 
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler  API_AVAILABLE(ios(10.0)){
