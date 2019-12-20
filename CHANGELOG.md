@@ -1,3 +1,10 @@
+## 0.3.0
++ 新增：清除通知栏单条通知方法
++ 修复：点击通知栏无法获取消息问题
++ 同步最新版 SDK
+## 0.2.0
++ 适配最新版本 JPush SDK
++ Android 支持设置角标 badge
 ## 0.1.0
 + 修复：调用 sendLocalNotification 接口 crash 问题；
 + 修复：iOS 启动 APP 角标自动消失问题；
